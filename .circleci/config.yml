@@ -1,0 +1,55 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.17.0
+    branches:
+      only:
+        - master
+
+    working_directory: ~/repo
+
+    environment:
+      FIREBASE_PROJECT: ${FIREBASE_PROJECT_ID}
+      FIREBASE_TOKEN: ${FIREBASE_TOKEN}
+
+    steps:
+      - checkout
+
+      #####################################################
+      ### BUILD
+      #####################################################
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: npm install
+      - run: npm install -D firebase-tools
+
+      - save_cache:
+          paths:
+            - node_modules
+            - functions/node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.json" }}
+
+      - run: touch .env
+      - run: echo FIREBASE_API_KEY=$FIREBASE_API_KEY >> .env
+      - run: echo FIREBASE_DATABASE_NAME=$FIREBASE_DATABASE_NAME >> .env
+      - run: echo FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID >> .env
+      - run: echo FIREBASE_SENDER_ID=$FIREBASE_SENDER_ID >> .env
+      - run: echo FIREBASE_TOKEN=$FIREBASE_TOKEN >> .env
+      - run: cat .env
+      - run: npm run build
+
+      #####################################################
+      ### FOR DEPLOY
+      #####################################################
+      - run: node_modules/.bin/firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"

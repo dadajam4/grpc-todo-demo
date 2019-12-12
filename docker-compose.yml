@@ -1,0 +1,21 @@
+version: '3'
+services:
+  app:
+    container_name: grpc-todo-demo-app
+    build:
+      context: app/
+    image: grpc-todo-demo/app
+    tty: true
+    env_file: .env
+    volumes:
+      - .:/app
+    ports:
+      - '3000:3000'
+      - '5000:5000'
+      - '9005:9005'
+    networks:
+      - grpc-todo-demo
+
+networks:
+  grpc-todo-demo:
+    driver: bridge

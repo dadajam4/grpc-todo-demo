@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package com.grpctododemo;
+
+option csharp_namespace = "Grpctododemo";
+option go_package = "grpctododemo";
+option java_multiple_files = true;
+option java_outer_classname = "Todo";
+option java_package = "com.grpctododemo";
+option objc_class_prefix = "GXX";
+option php_namespace = "Grpctododemo";
+
+import "google/protobuf/timestamp.proto";
+
+enum TodoState {
+  PENDING = 0;
+  DOING = 1;
+  DONE = 2;
+}
+
+message Todo {
+  int32 id = 1;
+  google.protobuf.Timestamp created_at = 2;
+  google.protobuf.Timestamp updated_at = 3;
+  string uid = 100; // 所有ユーザーUID
+  string title = 101; // TODOの見出し
+  string description = 102; // TODOの概要
+  TodoState state = 103; // TODOの状態
+}
+
+message GetTodoRequest {
+  int32 id = 1;
+}
+
+message GetTodoResponse {
+  Todo todo = 1;
+}
+
+message FindTodoRequest {
+}
+
+message FindTodoResponse {
+  repeated Todo todo = 1;
+}
+
+message CreateTodoRequest {
+  Todo todo = 1;
+}
+
+message CreateTodoResponse {
+  Todo todo = 1;
+}
+
+message UpdateTodoRequest {
+  Todo todo = 1;
+}
+
+message UpdateTodoResponse {
+  Todo todo = 1;
+}
+
+message DeleteTodoRequest {
+  int32 id = 1;
+}
+
+message DeleteTodoResponse {
+  Todo todo = 1;
+}
+
+service TodoService {
+  rpc Get(GetTodoRequest) returns (GetTodoResponse);
+  rpc Find(FindTodoRequest) returns (FindTodoResponse);
+  rpc Create(CreateTodoRequest) returns (CreateTodoResponse);
+  rpc Update(UpdateTodoRequest) returns (UpdateTodoResponse);
+  rpc Delete(DeleteTodoRequest) returns (DeleteTodoResponse);
+}
