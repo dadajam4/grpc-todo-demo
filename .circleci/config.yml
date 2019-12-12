@@ -27,7 +27,7 @@ jobs:
       # Download and cache dependencies
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.json" }}
+            - v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.template.json" }}
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
@@ -55,4 +55,4 @@ jobs:
       #####################################################
       ### FOR DEPLOY
       #####################################################
-      - run: node_modules/.bin/firebase deploy --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
+      - run: node_modules/.bin/firebase deploy --project $FIREBASE_PROJECT_ID --token $FIREBASE_TOKEN
