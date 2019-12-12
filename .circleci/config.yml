@@ -41,15 +41,15 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.template.json" }}
 
       - run:
-        name: generateenv
-        command: |
-          touch .env
-          echo FIREBASE_API_KEY=${FIREBASE_API_KEY} >> .env
-          echo FIREBASE_DATABASE_NAME=${FIREBASE_DATABASE_NAME} >> .env
-          echo FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID} >> .env
-          echo FIREBASE_SENDER_ID=${FIREBASE_SENDER_ID} >> .env
-          echo FIREBASE_TOKEN=${FIREBASE_TOKEN} >> .env
-          cat .env
+          name: generateenv
+          command: |
+            touch .env
+            echo FIREBASE_API_KEY=${FIREBASE_API_KEY} >> .env
+            echo FIREBASE_DATABASE_NAME=${FIREBASE_DATABASE_NAME} >> .env
+            echo FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID} >> .env
+            echo FIREBASE_SENDER_ID=${FIREBASE_SENDER_ID} >> .env
+            echo FIREBASE_TOKEN=${FIREBASE_TOKEN} >> .env
+            cat .env
       - run: npm run build
 
       #####################################################
