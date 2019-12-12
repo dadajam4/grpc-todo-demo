@@ -38,18 +38,21 @@ jobs:
           paths:
             - node_modules
             - functions/node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.json" }}
+          key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.template.json" }}
 
-      - run: touch .env
-      - run: echo FIREBASE_API_KEY=$FIREBASE_API_KEY >> .env
-      - run: echo FIREBASE_DATABASE_NAME=$FIREBASE_DATABASE_NAME >> .env
-      - run: echo FIREBASE_PROJECT_ID=$FIREBASE_PROJECT_ID >> .env
-      - run: echo FIREBASE_SENDER_ID=$FIREBASE_SENDER_ID >> .env
-      - run: echo FIREBASE_TOKEN=$FIREBASE_TOKEN >> .env
-      - run: cat .env
+      - run:
+        name: generateenv
+        command: |
+          touch .env
+          echo FIREBASE_API_KEY=${FIREBASE_API_KEY} >> .env
+          echo FIREBASE_DATABASE_NAME=${FIREBASE_DATABASE_NAME} >> .env
+          echo FIREBASE_PROJECT_ID=${FIREBASE_PROJECT_ID} >> .env
+          echo FIREBASE_SENDER_ID=${FIREBASE_SENDER_ID} >> .env
+          echo FIREBASE_TOKEN=${FIREBASE_TOKEN} >> .env
+          cat .env
       - run: npm run build
 
       #####################################################
       ### FOR DEPLOY
       #####################################################
-      - run: node_modules/.bin/firebase deploy --project "$FIREBASE_PJ" --token "$FIREBASE_TOKEN"
+      - run: node_modules/.bin/firebase deploy --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
