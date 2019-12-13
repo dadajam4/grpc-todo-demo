@@ -55,4 +55,4 @@ jobs:
       #####################################################
       ### FOR DEPLOY
       #####################################################
-      - run: node_modules/.bin/firebase deploy --token="$FIREBASE_TOKEN"
+      - run: node_modules/.bin/firebase deploy --token=$FIREBASE_TOKEN
