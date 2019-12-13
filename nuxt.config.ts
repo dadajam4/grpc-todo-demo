@@ -1,4 +1,5 @@
 import { Configuration } from '@nuxt/types';
+const config = require('dotenv').config();
 
 const nuxtConfig: Configuration = {
   mode: 'universal',
@@ -6,12 +7,13 @@ const nuxtConfig: Configuration = {
   server: {
     host: '0.0.0.0',
   },
+  env: config.parsed,
   buildModules: [
     '@nuxtjs/eslint-module',
     '@nuxt/typescript-build',
     '@nuxtjs/vuetify',
   ],
-  modules: ['cookie-universal-nuxt'],
+  modules: ['cookie-universal-nuxt', '@nuxtjs/dotenv'],
 
   router: {
     middleware: ['authenticated'],
