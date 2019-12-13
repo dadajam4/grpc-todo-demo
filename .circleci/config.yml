@@ -55,8 +55,4 @@ jobs:
       #####################################################
       ### FOR DEPLOY
       #####################################################
-      - run:
-          name: Deploy
-          command: >-
-            ln -s ./node_modules/firebase-tools/bin/firebase . &
-            ./firebase deploy --only hosting --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
+      - run: node_modules/.bin/firebase deploy --project $FIREBASE_PROJECT_ID --token "$FIREBASE_TOKEN"
