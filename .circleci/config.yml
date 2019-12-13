@@ -41,7 +41,7 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}-{{ checksum "functions/package.template.json" }}
 
       - run:
-          name: generateenv
+          name: Generate .env
           command: |
             touch .env
             echo FIREBASE_API_KEY=${FIREBASE_API_KEY} >> .env
@@ -55,4 +55,8 @@ jobs:
       #####################################################
       ### FOR DEPLOY
       #####################################################
-      - run: node_modules/.bin/firebase deploy --project $FIREBASE_PROJECT_ID --token $FIREBASE_TOKEN
+      - run:
+          name: Deploy
+          command: >-
+            ln -s ./node_modules/firebase-tools/bin/firebase . &
+            ./firebase deploy --only hosting --project "$FIREBASE_PROJECT_ID" --token "$FIREBASE_TOKEN"
