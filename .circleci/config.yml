@@ -14,13 +14,6 @@ jobs:
 
     working_directory: ~/repo
 
-    environment:
-      FIREBASE_API_KEY: ${FIREBASE_API_KEY}
-      FIREBASE_DATABASE_NAME: ${FIREBASE_DATABASE_NAME}
-      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
-      FIREBASE_SENDER_ID: ${FIREBASE_SENDER_ID}
-      FIREBASE_TOKEN: ${FIREBASE_TOKEN}
-
     steps:
       - checkout
 
