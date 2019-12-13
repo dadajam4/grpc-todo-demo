@@ -108,5 +108,4 @@ functions/app
 functions/lib
 functions/ssr
 functions/package.json
-.firebaserc
 .nuxt.config.ts
