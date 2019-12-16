@@ -34,6 +34,9 @@ export const actions: ActionTree<State, RootState> = {
   async serverInit({ dispatch }) {
     await dispatch('restoreUserFromCookie');
   },
+  async browserInit({ dispatch }, ctx: Context) {
+    await dispatch('getRedirectResult', ctx);
+  },
   authcheck({ getters }, ctx: Context) {
     const { route, redirect } = ctx;
     if (!/^\/auth/.test(route.path) && !getters.isAuthenticated) {
@@ -42,6 +45,22 @@ export const actions: ActionTree<State, RootState> = {
        */
       // this.$cookies.set('auth_redirect_for', route.fullPath, { path: '/' });
       return redirect('/auth/signin');
+    }
+  },
+  async getRedirectResult({ dispatch }, ctx: Context) {
+    try {
+      const result = await firebaseApp.auth().getRedirectResult();
+      const { user } = result;
+      if (user) {
+        await dispatch('login', user);
+        location.replace('/');
+        // console.log(user, ctx.app.ro);
+        // console.warn(user);
+        // (ctx.app as any).router.replace('/');
+      }
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
     }
   },
   async restoreUserFromCookie({ commit }) {

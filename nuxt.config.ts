@@ -14,7 +14,7 @@ const nuxtConfig: Configuration = {
     '@nuxtjs/vuetify',
   ],
   modules: ['cookie-universal-nuxt', '@nuxtjs/dotenv'],
-
+  plugins: [{ src: '~/plugins/browser', ssr: false }],
   router: {
     middleware: ['authenticated'],
   },

@@ -1,9 +1,13 @@
 import { GetterTree, ActionTree, MutationTree } from 'vuex';
 import { Context } from '@nuxt/types';
 
-export interface State {}
+export interface State {
+  initialized: boolean;
+}
 
-export const state = (): State => ({});
+export const state = (): State => ({
+  initialized: false,
+});
 
 export const getters: GetterTree<State, State> = {};
 
@@ -16,9 +20,14 @@ export const actions: ActionTree<State, State> = {
     //   dispatch('hotel/serverInit', ctx),
     // ]);
   },
-  async nuxtClientInit({ dispatch }, ctx: Context) {
-    // await dispatch('language/clientInit', ctx);
+  async nuxtBrowserInit({ dispatch, commit }, ctx: Context) {
+    await dispatch('user/browserInit', ctx);
+    commit('SET_INITIALIZED', true);
   },
 };
 
-export const mutations: MutationTree<State> = {};
+export const mutations: MutationTree<State> = {
+  SET_INITIALIZED(state, initialized: boolean) {
+    state.initialized = initialized;
+  },
+};

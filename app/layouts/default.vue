@@ -55,6 +55,18 @@
     <v-content>
       <nuxt></nuxt>
     </v-content>
+
+    <transition name="my-loading">
+      <div v-if="!initialized" class="my-loading">
+        <v-progress-linear
+          class="my-loading__progress"
+          color="light-blue"
+          indeterminate
+          rounded
+          height="6"
+        />
+      </div>
+    </transition>
   </v-app>
 </template>
 
@@ -72,6 +84,10 @@ import { Component } from 'nuxt-property-decorator';
 export default class MyView extends Vue {
   drawer = false;
 
+  get initialized() {
+    return this.$store.state.initialized;
+  }
+
   get currentRoutePath() {
     return this.$route.path;
   }
@@ -85,3 +101,30 @@ export default class MyView extends Vue {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.my-loading {
+  position: fixed;
+  z-index: 32767;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.8);
+
+  // &__progress {}
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.3s;
+  }
+
+  &-enter,
+  &-leave-active {
+    opacity: 0;
+  }
+}
+</style>

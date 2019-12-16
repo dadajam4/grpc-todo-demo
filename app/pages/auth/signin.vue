@@ -36,13 +36,14 @@ import firebaseApp, { googleProvider } from '~/firebase/app';
 })
 export default class MyView extends Vue {
   async signInWithGoogle() {
-    try {
-      const { user } = await firebaseApp.auth().signInWithPopup(googleProvider);
-      await this.$store.dispatch('user/login', user);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.warn('sign in failed', err);
-    }
+    await firebaseApp.auth().signInWithRedirect(googleProvider);
+    // try {
+    //   const { user } = await firebaseApp.auth().signInWithPopup(googleProvider);
+    //   await this.$store.dispatch('user/login', user);
+    // } catch (err) {
+    //   // eslint-disable-next-line no-console
+    //   console.warn('sign in failed', err);
+    // }
   }
 }
 </script>
