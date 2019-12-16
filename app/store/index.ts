@@ -22,7 +22,12 @@ export const actions: ActionTree<State, State> = {
   },
   async nuxtBrowserInit({ dispatch, commit }, ctx: Context) {
     await dispatch('user/browserInit', ctx);
-    commit('SET_INITIALIZED', true);
+    setTimeout(() => {
+      commit('SET_INITIALIZED', true);
+    }, 0);
+    // (window as any).$nuxt.$nextTick(() => {
+    //   commit('SET_INITIALIZED', true);
+    // });
   },
 };
 

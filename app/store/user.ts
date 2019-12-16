@@ -69,6 +69,10 @@ export const actions: ActionTree<State, RootState> = {
     if (access_token) {
       const decoded = jwtDecode(access_token) || null;
       if (decoded) {
+        /**
+         * @todo: ほんまはちゃんと検証しようね
+         * https://firebase.google.com/docs/auth/admin/verify-id-tokens?hl=ja#verify_id_tokens_using_a_third-party_jwt_library
+         */
         me = {
           name: decoded.name,
           email: decoded.email,
