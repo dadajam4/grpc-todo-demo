@@ -23,7 +23,7 @@
     "grpc_tools_node_protoc_ts": "^2.5.8",
     "js-cookie": "^2.2.1",
     "jwt-decode": "^2.2.0",
-    "nuxt": "^2.10.2",
+    "nuxt": "^2.16.3",
     "nuxt-property-decorator": "^2.5.0",
     "vue-property-decorator": "^8.3.0"
   },
